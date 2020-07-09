@@ -1,0 +1,27 @@
+.message-bar {
+	background-color: #fff;
+}
+
+.message-form {
+	display: grid;
+	grid-template-columns: 10fr 2fr;
+}
+
+.message-form > .form-group	{
+	grid-column: 1;
+	margin-bottom: 0 !important;
+}
+
+.message-form > .sendButton	{
+	grid-column: 2;
+}
+
+.message-box {
+	background-color: #fff;
+	border-radius: 5px;
+	width: fit-content
+}
+
+.messages-panel {
+	overflow-y: scroll;
+}

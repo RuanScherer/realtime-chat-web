@@ -2,7 +2,7 @@
   min-height: 100vh;
 }
 
-.bg-secondary {
+.bg-lightblue {
 	background-color: var(--lightblue) !important;
 }
 
@@ -46,11 +46,15 @@ label {
 	background-color: var(--brown) !important;
 }
 
-.btn-brown, .btn-brown:hover {
+.btn-lightblue {
+	background-color: var(--lightblue) !important;
+}
+
+.btn-brown, .btn-brown:hover, .btn-lightblue, .btn-lightblue:hover {
 	color: #fff !important;
 }
 
-.btn-brown:hover:not(:disabled) {
+.btn-brown:hover:not(:disabled), .hover-opacity:hover {
 	opacity: .85 !important;
 	transition: .25s;
 }
@@ -61,4 +65,13 @@ label {
 
 .text-500 {
 	font-weight: 500 !important;
+}
+
+.navbar-brand {
+	cursor: default;
+}
+
+.icon {
+	width: 1.5em;
+	height: 1.5em;
 }

@@ -20,7 +20,7 @@ const Sign: React.FC = () => {
 		history.replace("/chat")
 	}
 
-	return(
+	return (
 		<div className="min-100vh p-2 d-flex flex-column justify-content-center align-items-center">
 			<div className="card main-card w-100 radius shadow">
 				<div className="card-body">
