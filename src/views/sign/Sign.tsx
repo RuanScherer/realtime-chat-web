@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import  { useHistory } from 'react-router-dom'
-import ArrowRight from '../assets/ArrowRight'
+import { MdArrowForward } from 'react-icons/md'
 
 const Sign: React.FC = () => {
 	const [ username, setUsername ] = useState("")
@@ -42,7 +42,7 @@ const Sign: React.FC = () => {
 							disabled={error || error === null ? true : false}
 							onClick={evt => handleEnter(evt)}>
 							Começar
-							<ArrowRight />
+							<MdArrowForward className="ml-1"/>
 						</button>
 					</form>
 				</div>
