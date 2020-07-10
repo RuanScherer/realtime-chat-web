@@ -2,8 +2,8 @@
   min-height: 100vh;
 }
 
-.bg-lightblue {
-	background-color: var(--lightblue) !important;
+.bg-secondary {
+	background-color: var(--secondary) !important;
 }
 
 .app-container {
@@ -16,8 +16,8 @@
 	margin: 0 auto;
 }
 
-.main-card, .app-container > main {
-	max-width: 700px
+.app-container > main {
+	max-width: 800px
 }
 
 label {
@@ -35,7 +35,7 @@ label {
 
 .form-control:focus:not(.border-danger) {
 	border-style: solid;
-	border-color: #888 !important
+	border-color: var(--lightblue) !important
 }
 
 .btn-primary {
@@ -46,16 +46,17 @@ label {
 	background-color: var(--brown) !important;
 }
 
-.btn-lightblue {
-	background-color: var(--lightblue) !important;
+.btn-secondary {
+	background-color: var(--secondary) !important;
+	border-color: var(--secondary) !important;
 }
 
-.btn-brown, .btn-brown:hover, .btn-lightblue, .btn-lightblue:hover {
+.btn-brown, .btn-brown:hover, .btn-secondary, .btn-secondary:hover {
 	color: #fff !important;
 }
 
-.btn-brown:hover:not(:disabled), .hover-opacity:hover {
-	opacity: .85 !important;
+.btn:hover:not(:disabled), .hover-opacity:hover {
+	opacity: .9 !important;
 	transition: .25s;
 }
 

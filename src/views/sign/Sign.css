@@ -1,0 +1,9 @@
+.main-card {
+	min-height: 95vh;
+	border-radius: 0 0 6px 6px !important;
+	max-width: 600px;
+}
+
+.form-group > small {
+	margin-left: .3rem;
+}
