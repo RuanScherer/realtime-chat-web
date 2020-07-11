@@ -1,5 +1,6 @@
 .message-bar {
 	background-color: #fff;
+	border-top: 1.5px solid var(--lightblue);
 }
 
 .message-form {
@@ -24,4 +25,8 @@
 
 .messages-panel {
 	overflow-y: scroll;
+}
+
+.app-container .form-control {
+	border: 0 !important
 }
