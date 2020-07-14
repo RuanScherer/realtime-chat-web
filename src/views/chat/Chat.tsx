@@ -9,6 +9,7 @@ const io = require('socket.io-client')
 interface Message {
 	_id: string
 	username: string
+	to?: string
 	content: string
 	createdAt: string
 }
@@ -19,6 +20,9 @@ const Chat: React.FC = () => {
 	const [ socket, setSocket ] = useState(io('http://localhost:3333'))
 
 	useEffect(() => {
+		const { username } = auth.getTokenData()
+		socket.emit('setUsername', username)
+
 		socket.on("loadOldMessages", () => {
 			MessagesService.getAll()
 				.then(res => setMessages(res.data.messages))
