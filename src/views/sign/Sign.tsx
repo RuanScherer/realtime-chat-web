@@ -11,6 +11,7 @@ const Sign: React.FC = () => {
 	const [ registered, setRegistered ] = useState(false)
 	const [ error, setError ] = useState(false)
 	const history = useHistory()
+	const usersService = new UsersService()
 
 	function changeForm(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		evt.preventDefault()
@@ -28,7 +29,7 @@ const Sign: React.FC = () => {
 			password
 		}
 		if (registered) delete data.name
-		let promise = registered ? UsersService.auth(data) : UsersService.register(data)
+		let promise = registered ? usersService.login(data) : usersService.register(data)
 		promise
 			.then(response => {
 				localStorage.setItem("accessToken", response.data.token)

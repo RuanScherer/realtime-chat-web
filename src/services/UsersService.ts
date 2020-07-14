@@ -6,8 +6,8 @@ export interface User {
 	password: string
 }
 
-class UsersService extends Server {
-	public auth(user: User) {
+export default class UsersService extends Server {
+	public login(user: User) {
 		return this.connection.post('users/auth', user)
 	}
 
@@ -15,5 +15,3 @@ class UsersService extends Server {
 		return this.connection.post('users', user)
 	}
 }
-
-export default new UsersService()

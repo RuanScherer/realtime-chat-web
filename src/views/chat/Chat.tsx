@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { MdAccountCircle, MdExitToApp } from 'react-icons/md'
 import MessagesService from '../../services/MessagesService'
 import Formaters from '../../common/formaters'
-import auth from '../../common/auth'
 import './Chat.css'
+import Auth from '../../common/auth'
 const io = require('socket.io-client')
 
 interface Message {
@@ -18,20 +18,27 @@ const Chat: React.FC = () => {
 	const [ messages, setMessages ] = useState<Message[]>([])
 	const [ message, setMessage ] = useState("")
 	const [ socket, setSocket ] = useState(io('http://localhost:3333'))
+	const [ messagesService ] = useState(new MessagesService(socket))
+	const auth = new Auth()
 
 	useEffect(() => {
-		const { username } = auth.getTokenData()
-		socket.emit('setUsername', username)
+		socket.disconnect()
+		const connection = io('http://localhost:3333')
 
-		socket.on("loadOldMessages", () => {
-			MessagesService.getAll()
+		const { username } = auth.getTokenData()
+		connection.emit('setUsername', username)
+
+		connection.on("loadOldMessages", () => {
+			messagesService.getAll()
 				.then(res => setMessages(res.data.messages))
 				.catch(err => alert("Falha ao carregar mensagens antigas, tente novamente."))
 		})
 	
-		socket.on("loadNewMessage", (message: Message) => {
+		connection.on("loadNewMessage", (message: Message) => {
 			setMessages([ ...messages, message])
 		})
+
+		setSocket(connection)
 	}, [])
 
 	function handleChangeMessage(evt: React.ChangeEvent<HTMLInputElement>) {
@@ -46,7 +53,7 @@ const Chat: React.FC = () => {
 			username: localStorage.getItem('username') as string,
 			content: message
 		}
-		MessagesService.create(data)
+		messagesService.create(data)
 			.then(response => {
 				const { message } = response.data
 				setMessage("")
@@ -66,7 +73,7 @@ const Chat: React.FC = () => {
 							<MdAccountCircle className="icon" title="Usuário"/>
 						</button>
 						<button className="btn btn-link hover-opacity text-light">
-							<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout()}/>
+							<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>
 						</button>
 					</div>
 				</header>

@@ -1,15 +1,16 @@
 import Server from '../common/api'
+import { Socket } from '../common/auth'
 
 export interface Message {
 	username: string
 	content: string
 }
 
-class MessagesService extends Server {
+export default class MessagesService extends Server {
 	private config = {}
 
-	constructor() {
-		super()
+	constructor(socket: Socket) {
+		super(socket)
 		this.setRequestConfig()
 	}
 
@@ -31,5 +32,3 @@ class MessagesService extends Server {
 		return this.connection.post('messages', data, this.config)
 	}
 }
-
-export default new MessagesService()
