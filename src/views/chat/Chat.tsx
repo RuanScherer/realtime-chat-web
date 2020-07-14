@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { MdAccountCircle, MdExitToApp } from 'react-icons/md'
+import { MdAccountCircle, MdExitToApp, MdSearch } from 'react-icons/md'
 import MessagesService from '../../services/MessagesService'
 import Formaters from '../../common/formaters'
 import './Chat.css'
@@ -71,14 +71,17 @@ const Chat: React.FC = () => {
 					<h2 className="navbar-brand mb-0 text-light text-500">Realtime Chat</h2>
 					<div>
 						<button className="btn btn-link hover-opacity text-light">
-							<MdAccountCircle className="icon" title="Usuário"/>
+							<MdSearch className="icon" title="Buscar usuários"/>
+						</button>
+						<button className="btn btn-link hover-opacity text-light">
+							<MdAccountCircle className="icon" title="Minha conta"/>
 						</button>
 						<button className="btn btn-link hover-opacity text-light">
 							<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>
 						</button>
 					</div>
 				</header>
-				<section className="h-100 p-2 d-flex flex-column justify-content-end messages-panel">
+				<section className="h-100 p-2 d-flex flex-column flex-column-reverse messages-panel">
 					{	
 						messages.map(message => (
 							<article key={message._id} className={`message-box px-3 py-2 mt-2 ${message.username === localStorage.getItem('username') ? "align-self-end" : ""}`}>

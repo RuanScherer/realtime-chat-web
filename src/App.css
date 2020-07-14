@@ -76,3 +76,14 @@ label {
 	width: 1.5em;
 	height: 1.5em;
 }
+
+::-webkit-scrollbar {
+	position: fixed;
+	width: 8px;
+	background-color: transparent !important
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #cecece;
+	border-radius: 8px !important
+}
