@@ -20,7 +20,8 @@
 .message-box {
 	background-color: #fff;
 	border-radius: 5px;
-	width: fit-content
+	width: fit-content;
+	max-width: 75%;
 }
 
 .messages-panel {

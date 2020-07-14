@@ -31,10 +31,11 @@ const Chat: React.FC = () => {
 		connection.on("loadOldMessages", () => {
 			messagesService.getAll()
 				.then(res => setMessages(res.data.messages))
-				.catch(err => alert("Falha ao carregar mensagens antigas, tente novamente."))
+				.catch(() => alert("Falha ao carregar mensagens antigas, tente novamente."))
 		})
 	
 		connection.on("loadNewMessage", (message: Message) => {
+			console.log(messages)
 			setMessages([ ...messages, message])
 		})
 
@@ -81,11 +82,9 @@ const Chat: React.FC = () => {
 					{	
 						messages.map(message => (
 							<article key={message._id} className={`message-box px-3 py-2 mt-2 ${message.username === localStorage.getItem('username') ? "align-self-end" : ""}`}>
-								<h5 className="card-title mb-1">
-									{message.username}
-									<span className="text-muted font-weight-normal"> às {Formaters.formatTime(message.createdAt)}</span>
-								</h5>
+								<h5 className="card-title mb-1">{message.username}</h5>
 								<p className="h6 font-weight-normal mb-0">{message.content}</p>
+								<small className="text-muted">{Formaters.formatTime(message.createdAt)} (UTC)</small>
 							</article>
 						))
 					}
