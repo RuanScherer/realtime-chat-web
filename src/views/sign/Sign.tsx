@@ -81,7 +81,9 @@ const Sign: React.FC = () => {
 							{ registered ? "Entrar" : "Começar"}
 							<MdArrowForward className="ml-auto"/>
 						</button>
-						<button className="btn btn-link text-muted align-self-center" onClick={(evt) => changeForm(evt)}>Já possui uma conta? Entre</button>
+						<button className="btn btn-link text-muted align-self-center" onClick={(evt) => changeForm(evt)}>
+							{ registered ? "Não possui uma conta? Cadastre-se" : "Já possui uma conta? Entre" }
+						</button>
 					</form>
 				</div>
 			</div>
