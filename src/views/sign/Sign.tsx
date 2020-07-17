@@ -5,7 +5,6 @@ import { MdArrowForward } from 'react-icons/md'
 import './Sign.css'
 
 const Sign: React.FC = () => {
-	const [ name, setName ] = useState("")
 	const [ username, setUsername ] = useState("")
 	const [ password, setPassword ] = useState("")
 	const [ registered, setRegistered ] = useState(false)
@@ -15,7 +14,6 @@ const Sign: React.FC = () => {
 
 	function changeForm(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		evt.preventDefault()
-		setName("")
 		setUsername("")
 		setPassword("")
 		setRegistered(!registered)
@@ -24,11 +22,9 @@ const Sign: React.FC = () => {
 	function handleEnter(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		evt.preventDefault()
 		let data = {
-			name,
 			username,
 			password
 		}
-		if (registered) delete data.name
 		let promise = registered ? usersService.login(data) : usersService.register(data)
 		promise
 			.then(response => {
@@ -48,22 +44,6 @@ const Sign: React.FC = () => {
 					<h2 className="mb-4 align-self-center">Realtime Chat</h2>
 					<h5 className="mb-3 align-self-center">{ registered ? "Entrar com conta existente" : "Cadastre-se para começar"}</h5>
 					<form className="d-flex flex-column">
-						{ !registered &&
-							<div className="form-group">
-								<label htmlFor="name" className="text-500">Nome</label>
-								<input 
-									type="text"
-									id="name"
-									name="name"
-									className="form-control form-control-lg"
-									placeholder="Seu nome aqui"
-									aria-describedby="nameHelp"
-									onChange={evt => setName(evt.target.value)}/>
-								<small id="nameHelp" className="form-text text-muted">
-									Este nome será mostrado para os seus contatos.
-								</small>
-							</div>
-						}
 						<div className="form-group">
 							<label htmlFor="username" className="text-500">Nome de usuário</label>
 							<input 
