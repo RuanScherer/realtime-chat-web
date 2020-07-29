@@ -13,10 +13,6 @@ const Chat: React.FC = () => {
 	const [ usersService ] = useState(new UsersService())
 	const auth = new Auth()
 
-	useEffect(() => {
-		const { username } = auth.getTokenData()
-	}, [])
-
 	function handleSearch(search: string) {
 		if (!search.length) return
 
@@ -30,6 +26,7 @@ const Chat: React.FC = () => {
 	return (
 		<div className="app-container">
 			<main className="h-100 d-flex flex-column justify-content-between">
+				<Header />
 				<section className="w-100 search-bar border-0">
 					<form className="search-form p-2">
 						<div className="form-group pr-2">

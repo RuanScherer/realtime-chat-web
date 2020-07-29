@@ -4,7 +4,7 @@ import { MdAccountCircle, MdExitToApp, MdSearch } from 'react-icons/md'
 import Auth, { Socket } from '../common/auth'
 
 export interface Props {
-	socket: Socket
+	socket?: Socket
 }
 
 const Header: React.FC<Props> = ({ socket }) => {
@@ -20,9 +20,11 @@ const Header: React.FC<Props> = ({ socket }) => {
 				<button className="btn btn-link hover-opacity text-light">
 					<MdAccountCircle className="icon" title="Minha conta"/>
 				</button>
-				<button className="btn btn-link hover-opacity text-light">
-					<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>
-				</button>
+				{	socket &&
+					<button className="btn btn-link hover-opacity text-light">
+						<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>
+					</button>
+				}
 			</div>
 		</header>
 	)
