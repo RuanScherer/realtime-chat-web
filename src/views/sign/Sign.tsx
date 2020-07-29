@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import UsersService from '../../services/UsersService'
-import  { useHistory } from 'react-router-dom'
 import { MdArrowForward } from 'react-icons/md'
 import './Sign.css'
 
@@ -9,7 +8,6 @@ const Sign: React.FC = () => {
 	const [ password, setPassword ] = useState("")
 	const [ registered, setRegistered ] = useState(false)
 	const [ error, setError ] = useState(false)
-	const history = useHistory()
 	const usersService = new UsersService()
 
 	function changeForm(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -29,12 +27,9 @@ const Sign: React.FC = () => {
 		promise
 			.then(response => {
 				localStorage.setItem("accessToken", response.data.token)
-				history.replace("/chat")
+				window.location.replace("/chat")
 			})
-			.catch(err => {
-				setError(true)
-			})
-		localStorage.setItem("username", username)
+			.catch(() => setError(true))
 	}
 
 	return (

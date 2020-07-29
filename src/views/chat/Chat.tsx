@@ -41,9 +41,10 @@ const Chat: React.FC = () => {
 	function handleSendMessage(evt: React.MouseEvent) {
 		evt.preventDefault()
 		if (!message.length) return
+		const { username } = auth.getTokenData()
 
 		const data = {
-			username: localStorage.getItem('username') as string,
+			username,
 			content: message
 		}
 		messagesService.create(data)
@@ -63,7 +64,7 @@ const Chat: React.FC = () => {
 				<section className="h-100 p-2 d-flex flex-column flex-column-reverse messages-panel">
 					{	
 						messages.map(message => (
-							<article key={message._id} className={`message-box px-3 py-2 mt-2 ${message.username === localStorage.getItem('username') ? "align-self-end" : ""}`}>
+							<article key={message._id} className={`message-box px-3 py-2 mt-2 ${message.username === auth.getTokenData().username ? "align-self-end" : ""}`}>
 								<h5 className="card-title mb-1">{message.username}</h5>
 								<p className="h6 font-weight-normal mb-0">{message.content}</p>
 								<small className="text-muted">{Formaters.formatTime(message.createdAt)} (UTC)</small>
