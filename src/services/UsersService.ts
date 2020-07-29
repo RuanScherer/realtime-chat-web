@@ -14,4 +14,8 @@ export default class UsersService extends Server {
 	public register(user: User) {
 		return this.connection.post('users', user)
 	}
+
+	public search(username: string) {
+		return this.connection.get(`users/search?search=${username}`)
+	}
 }

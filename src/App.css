@@ -87,3 +87,40 @@ label {
 	background-color: #cecece;
 	border-radius: 8px !important
 }
+
+.message-bar, .search-bar {
+	background-color: #fff;
+	border-top: 1.5px solid var(--lightblue);
+}
+
+.message-form, .search-form {
+	display: grid;
+	grid-template-columns: 10fr 2fr;
+}
+
+.message-form > .form-group, .search-form > .form-group	{
+	grid-column: 1;
+	margin-bottom: 0 !important;
+}
+
+.message-form > .sendButton, .search-form > .sendButton	{
+	grid-column: 2;
+}
+
+.message-box, .search-box {
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.message-box {
+	width: fit-content;
+	max-width: 75%;
+}
+
+.messages-panel, .search-panel {
+	overflow-y: scroll;
+}
+
+.app-container .form-control {
+	border: 0 !important
+}

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Sign from './views/sign/Sign'
 import Chat from './views/chat/Chat'
+import Search from './views/search/Search'
 
 
 export interface IRoute {}
@@ -26,6 +27,7 @@ function App() {
 				<PublicRoute path="/" exact component={Sign}/>
 				<PublicRoute path="/sign" component={Sign}/>
 				<Route path="/chat" component={Chat}/>
+				<Route path="/search" component={Search}/>
 			</Switch>
     </Router>
   );

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { MdAccountCircle, MdExitToApp, MdSearch } from 'react-icons/md'
 import MessagesService from '../../services/MessagesService'
+import Header from '../../components/Header'
 import Formaters from '../../common/formaters'
-import './Chat.css'
 import Auth from '../../common/auth'
 const io = require('socket.io-client')
 
@@ -34,17 +33,10 @@ const Chat: React.FC = () => {
 				.catch(() => alert("Falha ao carregar mensagens antigas, tente novamente."))
 		})
 	
-		connection.on("loadNewMessage", (message: Message) => {
-			console.log(messages)
-			setMessages([ ...messages, message])
-		})
+		connection.on("loadNewMessage", (newMessage: Message) => setMessages([...messages, newMessage]))
 
 		setSocket(connection)
 	}, [])
-
-	function handleChangeMessage(evt: React.ChangeEvent<HTMLInputElement>) {
-		setMessage(evt.target.value)
-	}
 
 	function handleSendMessage(evt: React.MouseEvent) {
 		evt.preventDefault()
@@ -56,10 +48,10 @@ const Chat: React.FC = () => {
 		}
 		messagesService.create(data)
 			.then(response => {
-				const { message } = response.data
 				setMessage("")
-				setMessages([ ...messages, message])
-				socket.emit('newMessage', message)
+
+				const newMessage = response.data.message
+				socket.emit('newMessage', newMessage)
 			})
 			.catch(() => alert("Erro ao enviar mensagem."))
 	}
@@ -67,20 +59,7 @@ const Chat: React.FC = () => {
 	return (
 		<div className="app-container">
 			<main className="h-100 d-flex flex-column justify-content-between">
-				<header className="navbar d-flex justify-content-between bg-secondary">
-					<h2 className="navbar-brand mb-0 text-light text-500">Realtime Chat</h2>
-					<div>
-						<button className="btn btn-link hover-opacity text-light">
-							<MdSearch className="icon" title="Buscar usuários"/>
-						</button>
-						<button className="btn btn-link hover-opacity text-light">
-							<MdAccountCircle className="icon" title="Minha conta"/>
-						</button>
-						<button className="btn btn-link hover-opacity text-light">
-							<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>
-						</button>
-					</div>
-				</header>
+				<Header socket={socket} />
 				<section className="h-100 p-2 d-flex flex-column flex-column-reverse messages-panel">
 					{	
 						messages.map(message => (
@@ -103,7 +82,7 @@ const Chat: React.FC = () => {
 								placeholder="Digite sua mensagem"
 								autoComplete="off"
 								value={message}
-								onChange={handleChangeMessage}/>
+								onChange={evt => setMessage(evt.target.value)}/>
 						</div>
 						<button className="btn btn-secondary send-button text-500" onClick={handleSendMessage}>Enviar</button>
 					</form>
