@@ -33,7 +33,7 @@ const Chat: React.FC = () => {
 				.catch(() => alert("Falha ao carregar mensagens antigas, tente novamente."))
 		})
 	
-		connection.on("loadNewMessage", (newMessage: Message) => setMessages([...messages, newMessage]))
+		connection.on("loadNewMessage", (newMessage: Message) => setMessages(messages => [newMessage, ...messages]))
 
 		setSocket(connection)
 	}, [])
@@ -50,9 +50,8 @@ const Chat: React.FC = () => {
 		messagesService.create(data)
 			.then(response => {
 				setMessage("")
-
-				const newMessage = response.data.message
-				socket.emit('newMessage', newMessage)
+				setMessages(messages => [response.data.message, ...messages])
+				socket.emit('newMessage', response.data.message)
 			})
 			.catch(() => alert("Erro ao enviar mensagem."))
 	}
@@ -61,7 +60,7 @@ const Chat: React.FC = () => {
 		<div className="app-container">
 			<main className="h-100 d-flex flex-column justify-content-between">
 				<Header socket={socket} />
-				<section className="h-100 p-2 d-flex flex-column flex-column-reverse messages-panel">
+				<section className="h-100 p-2 d-flex flex-column-reverse messages-panel">
 					{	
 						messages.map(message => (
 							<article key={message._id} className={`message-box px-3 py-2 mt-2 ${message.username === auth.getTokenData().username ? "align-self-end" : ""}`}>
