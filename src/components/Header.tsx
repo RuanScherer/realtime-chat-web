@@ -17,9 +17,9 @@ const Header: React.FC<Props> = ({ socket }) => {
 				<Link to="search" className="btn btn-link hover-opacity text-light">
 					<MdSearch className="icon" title="Buscar usuários"/>
 				</Link>
-				<button className="btn btn-link hover-opacity text-light">
+				<Link to="account" className="btn btn-link hover-opacity text-light">
 					<MdAccountCircle className="icon" title="Minha conta"/>
-				</button>
+				</Link>
 				{	socket &&
 					<button className="btn btn-link hover-opacity text-light">
 						<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>

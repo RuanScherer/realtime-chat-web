@@ -5,6 +5,7 @@ import './App.css';
 import Sign from './views/sign/Sign'
 import Chat from './views/chat/Chat'
 import Search from './views/search/Search'
+import Account from './views/account/Account'
 
 
 export interface IRoute {}
@@ -37,6 +38,7 @@ function App() {
 					<PublicRoute path="/sign" component={Sign}/>
 					<PrivateRoute path="/chat" component={Chat}/>
 					<PrivateRoute path="/search" component={Search}/>
+					<PrivateRoute path="/account" component={Account}/>
 				</Switch>
 		</Router>
 	);
