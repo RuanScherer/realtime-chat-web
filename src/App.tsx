@@ -12,25 +12,34 @@ export interface IRoute {}
 function App() {
 	const isLogged = localStorage.getItem('accessToken') ? true : false
 
-	function PublicRoute({ component: Component, ...rest}: any) {
+	function PublicRoute({ component: Component, ...rest }: any) {
 		return (
 			<Route {...rest} render={props => {
-				if (isLogged) return <Redirect to={{ pathname: "/chat", state: { from: props.location }}} />
+				if (isLogged) return <Redirect to={{ pathname: "/chat", state: { from: props.location } }} />
 				return  <Component {...rest} />
 			}}/>
 		)
 	}
 
-  return (
-    <Router>
-			<Switch>
-				<PublicRoute path="/" exact component={Sign}/>
-				<PublicRoute path="/sign" component={Sign}/>
-				<Route path="/chat" component={Chat}/>
-				<Route path="/search" component={Search}/>
-			</Switch>
-    </Router>
-  );
+	function PrivateRoute({ component: Component, ...rest }: any) {
+		return (
+			<Route {...rest} render={props => {
+				if (!isLogged) return <Redirect to={{ pathname: "/", state: { from: props.location } }}	/>
+				return <Component {...rest} />
+			}}/>
+		)
+	}
+
+	return (
+		<Router>
+				<Switch>
+					<PublicRoute path="/" exact component={Sign}/>
+					<PublicRoute path="/sign" component={Sign}/>
+					<PrivateRoute path="/chat" component={Chat}/>
+					<PrivateRoute path="/search" component={Search}/>
+				</Switch>
+		</Router>
+	);
 }
 
 export default App;
