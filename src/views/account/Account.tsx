@@ -18,7 +18,12 @@ const Account: React.FC = () => {
     function handleSave(evt: React.MouseEvent) {
         evt.preventDefault()
         usersService.update(auth.getTokenData().id, username)
-            .then(() => setStatus("success"))
+            .then(() => {
+                setStatus("success")
+                setTimeout(() => {
+                    auth.logout()
+                }, 3000)
+            })
             .catch(() => setStatus("error"))
     }
 
@@ -46,7 +51,7 @@ const Account: React.FC = () => {
                         </div>
                         { status !== "" &&
                             <div className={`alert alert-${status === 'success' ? status : 'danger'}`} role="dialog">
-                                { status === 'success' ? 'Alterações salvas com sucesso.' : 'Erro ao salvar alterações.' }
+                                { status === 'success' ? 'Sucesso! Você será deslogado para aplicar as alterações.' : 'Erro ao salvar alterações.' }
                             </div>
                         }
                         <button 
