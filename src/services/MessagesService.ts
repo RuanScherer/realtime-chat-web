@@ -2,7 +2,11 @@ import Server from '../common/api'
 import { Socket } from '../common/auth'
 
 export interface Message {
-	username: string
+	from: {
+		_id: string
+		username: string
+	},
+	to?: string,
 	content: string
 }
 
@@ -30,5 +34,10 @@ export default class MessagesService extends Server {
 	public create(data: Message) {
 		this.setRequestConfig()
 		return this.connection.post('messages', data, this.config)
+	}
+
+	public show(receiver: string) {
+		this.setRequestConfig()
+		return this.connection.get(`messages/conversation/${receiver}`, this.config)
 	}
 }

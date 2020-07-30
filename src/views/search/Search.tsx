@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../../components/Header'
 import UsersService from '../../services/UsersService'
 import Auth from '../../common/auth'
@@ -49,9 +50,9 @@ const Chat: React.FC = () => {
 						users.map(user => {
 							if (!(user.username === auth.getTokenData().username)) {
 								return(
-									<article key={user._id} className="w-100 search-box px-3 py-2 my-1 card-title h5">
+									<Link to={`chat/${user._id}`} key={user._id} className="w-100 search-box px-3 py-2 my-1 card-title h5 text-dark">
 										{user.username}
-									</article>
+									</Link>
 								)
 							}
 						})

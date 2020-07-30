@@ -36,6 +36,7 @@ function App() {
 				<Switch>
 					<PublicRoute path="/" exact component={Sign}/>
 					<PublicRoute path="/sign" component={Sign}/>
+					<PrivateRoute path="/chat/:id" component={Chat}/>
 					<PrivateRoute path="/chat" component={Chat}/>
 					<PrivateRoute path="/search" component={Search}/>
 					<PrivateRoute path="/account" component={Account}/>
