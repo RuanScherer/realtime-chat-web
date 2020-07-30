@@ -8,8 +8,8 @@ export default class Auth {
 		return JSON.parse(atob(data))
 	}
 
-	logout(socket: Socket) {
-		socket.disconnect()
+	logout(socket?: Socket) {
+		if (socket) socket.disconnect()
 		localStorage.removeItem("accessToken")
 		window.location.replace("/")
 	}
