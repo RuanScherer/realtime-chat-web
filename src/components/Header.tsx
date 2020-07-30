@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { MdAccountCircle, MdExitToApp, MdSearch } from 'react-icons/md'
+import { MdAccountCircle, MdExitToApp, MdSearch, MdHome } from 'react-icons/md'
 import Auth, { Socket } from '../common/auth'
 
 export interface Props {
@@ -17,17 +17,18 @@ const Header: React.FC<Props> = ({ socket, conversation }) => {
 				{ conversation || 'Realtime Chat' }
 			</h2>
 			<div>
+				<Link to="/" className="btn btn-link hover-opacity text-light">
+					<MdHome className="icon" title="Início"/>
+				</Link>
 				<Link to="/search" className="btn btn-link hover-opacity text-light">
 					<MdSearch className="icon" title="Buscar usuários"/>
 				</Link>
 				<Link to="/account" className="btn btn-link hover-opacity text-light">
 					<MdAccountCircle className="icon" title="Minha conta"/>
 				</Link>
-				{	socket &&
-					<button className="btn btn-link hover-opacity text-light">
-						<MdExitToApp className="icon" title="Sair" onClick={() => auth.logout(socket)}/>
-					</button>
-				}
+				<button className="btn btn-link hover-opacity text-light">
+					<MdExitToApp className="icon" title="Sair" onClick={() => socket ? auth.logout(socket) : auth.logout()}/>
+				</button>
 			</div>
 		</header>
 	)
