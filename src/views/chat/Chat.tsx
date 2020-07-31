@@ -4,6 +4,7 @@ import MessagesService from '../../services/MessagesService'
 import Header from '../../components/Header'
 import Formaters from '../../common/formaters'
 import Auth from '../../common/auth'
+import UsersService from '../../services/UsersService'
 const io = require('socket.io-client')
 
 interface Message {
@@ -29,7 +30,9 @@ const Chat: React.FC = () => {
 	const [ message, setMessage ] = useState("")
 	const [ socket, setSocket ] = useState(io('http://localhost:3333'))
 	const [ receiver, setReceiver ] = useState("")
+	const [ receiverName, setReceiverName ] = useState("")
 	const [ messagesService ] = useState(new MessagesService(socket))
+	const usersService = new UsersService()
 	const auth = new Auth()
 	const params = useParams() as ChatRouteParams
 
@@ -37,9 +40,6 @@ const Chat: React.FC = () => {
 		socket.disconnect()
 		const connection = io('http://localhost:3333')
 		const { id } = params
-
-		const { username } = auth.getTokenData()
-		connection.emit('setUsername', username)
 
 		connection.on("loadOldMessages", () => {
 			if (id) {
@@ -54,12 +54,46 @@ const Chat: React.FC = () => {
 			}
 		})
 	
-		connection.on("loadNewMessage", (newMessage: Message) => setMessages(messages => [newMessage, ...messages]))
+		connection.on("loadNewMessage", (newMessage: Message) => {
+			if (newMessage.to === undefined && !params.id) {
+				setMessages(messages => [newMessage, ...messages])
+			}
+			else if (newMessage.to !== undefined && newMessage.from._id === params.id) {
+				setMessages(messages => [newMessage, ...messages])
+			}
+
+			if ("Notification" in window) {
+				if (Notification.permission === "granted") {
+					new Notification("Realtime Chat", {
+						body: `Nova mensagem de ${newMessage.from.username}`
+					})
+				}
+				else if (Notification.permission !== 'denied') {
+					Notification.requestPermission(function (permission) {
+					  if (permission === "granted") {
+						new Notification("Realtime Chat", {
+							body: `Nova mensagem de ${newMessage.from.username}`
+						})
+					  }
+					})
+				}
+			}
+		})
 
 		if (params.id) setReceiver(params.id)
-
 		setSocket(connection)
 	}, [])
+
+	useEffect(() => {
+		const { username } = auth.getTokenData()
+		socket.emit('setUsername', username)
+	}, [socket])
+
+	useEffect(() => {
+		usersService.show(receiver)
+			.then(response => setReceiverName(response.data.user.username))
+			.catch(() => setReceiverName("Desconhecido"))
+	}, [receiver])
 
 	function handleSendMessage(evt: React.MouseEvent) {
 		evt.preventDefault()
@@ -86,7 +120,7 @@ const Chat: React.FC = () => {
 	return (
 		<div className="app-container">
 			<main className="h-100 d-flex flex-column justify-content-between">
-				<Header socket={socket} conversation="Chat Público"/>
+				<Header socket={socket} conversation={receiver ? receiverName : "Chat Público"}/>
 				<section className="h-100 p-2 d-flex flex-column-reverse messages-panel">
 					{	
 						messages.map(message => (
